@@ -21,6 +21,10 @@ const $ = (id) => document.getElementById(id);
    ELEMENTS
    ========================================================= */
 
+const editConfirmButton = document.getElementById("editConfirmButton");
+
+const editCancelButton = document.getElementById("editCancelButton");
+
 const authScreen = $("auth-screen");
 const chatScreen = $("chat-screen");
 
@@ -117,6 +121,20 @@ function setupChatEvents() {
     }
 }
 
+function setupProfileEvents() {
+    if (profileButton) {
+        profileButton.addEventListener("click", openMyProfile);
+    }
+
+    if (profileCloseButton) {
+        profileCloseButton.addEventListener("click", closeProfileModal);
+    }
+
+    if (editProfileButton) {
+        editProfileButton.addEventListener("click", editMyProfile);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     setupAuthEvents();
@@ -172,7 +190,6 @@ function setupAuthEvents() {
             login();
         }
     });
-
 
     registerPasswordConfirm.addEventListener(
         "keydown",
