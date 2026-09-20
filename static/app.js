@@ -56,10 +56,64 @@ const profileModal = $("profile-modal");
 
 const toast = $("toast");
 
+const contextMenu = document.getElementById("contextMenu");
 
 /* =========================================================
    INITIALIZATION
    ========================================================= */
+
+function sendMessage() {
+    const text = messageInput.value.trim();
+
+    if (!text) return;
+
+    if (!socket || socket.readyState !== WebSocket.OPEN) {
+        showToast("Нет соединения с сервером");
+        return;
+    }
+
+    socket.send(JSON.stringify({
+        type: "message",
+        text: text,
+        reply_to: messageInput.dataset.replyTo || null
+    }));
+
+    messageInput.value = "";
+    delete messageInput.dataset.replyTo;
+
+    autoResizeTextarea();
+    sendTypingStatus(false);
+}
+
+function setupChatEvents() {
+    if (sendButton) {
+        sendButton.addEventListener("click", sendMessage);
+    }
+
+    if (emojiButton) {
+        emojiButton.addEventListener("click", insertRandomEmoji);
+    }
+
+    if (messageInput) {
+        messageInput.addEventListener("input", () => {
+            autoResizeTextarea();
+            sendTypingStatus(true);
+
+            clearTimeout(typingTimeout);
+
+            typingTimeout = setTimeout(() => {
+                sendTypingStatus(false);
+            }, 1000);
+        });
+
+        messageInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+    }
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
 
