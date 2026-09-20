@@ -58,6 +58,8 @@ const toast = $("toast");
 
 const contextMenu = document.getElementById("contextMenu");
 
+const emojiButton = document.getElementById("emojiButton");
+
 /* =========================================================
    INITIALIZATION
    ========================================================= */
