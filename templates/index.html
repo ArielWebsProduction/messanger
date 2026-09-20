@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    >
+
+    <title>Palm Messenger 🌴</title>
+
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
+</head>
+
+<body>
+
+<div id="app">
+
+    <!-- ============================= -->
+    <!-- AUTH SCREEN -->
+    <!-- ============================= -->
+
+    <section id="auth-screen" class="screen">
+
+        <div class="auth-card">
+
+            <div class="logo">
+                <div class="logo-icon">🌴</div>
+                <h1>Palm Messenger</h1>
+                <p>Chat under the palms</p>
+            </div>
+
+            <!-- LOGIN -->
+
+            <div id="login-form" class="auth-form">
+
+                <h2>С возвращением!</h2>
+
+                <input
+                    id="login-username"
+                    type="text"
+                    placeholder="Имя пользователя"
+                    autocomplete="username"
+                >
+
+                <input
+                    id="login-password"
+                    type="password"
+                    placeholder="Пароль"
+                    autocomplete="current-password"
+                >
+
+                <button id="login-button" class="primary-button">
+                    Войти
+                </button>
+
+                <p class="auth-switch">
+                    Нет аккаунта?
+                    <button id="show-register" class="text-button">
+                        Создать аккаунт
+                    </button>
+                </p>
+
+                <div id="login-error" class="error-message"></div>
+
+            </div>
+
+
+            <!-- REGISTER -->
+
+            <div
+                id="register-form"
+                class="auth-form hidden"
+            >
+
+                <h2>Создать аккаунт</h2>
+
+                <input
+                    id="register-username"
+                    type="text"
+                    placeholder="Имя пользователя"
+                    autocomplete="username"
+                >
+
+                <input
+                    id="register-display-name"
+                    type="text"
+                    placeholder="Отображаемое имя"
+                    autocomplete="name"
+                >
+
+                <input
+                    id="register-password"
+                    type="password"
+                    placeholder="Пароль"
+                    autocomplete="new-password"
+                >
+
+                <input
+                    id="register-password-confirm"
+                    type="password"
+                    placeholder="Повторите пароль"
+                    autocomplete="new-password"
+                >
+
+                <button
+                    id="register-button"
+                    class="primary-button"
+                >
+                    Создать аккаунт
+                </button>
+
+                <p class="auth-switch">
+                    Уже есть аккаунт?
+                    <button id="show-login" class="text-button">
+                        Войти
+                    </button>
+                </p>
+
+                <div
+                    id="register-error"
+                    class="error-message"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- CHAT SCREEN -->
+    <!-- ============================= -->
+
+    <section
+        id="chat-screen"
+        class="screen hidden"
+    >
+
+        <div class="messenger">
+
+            <!-- HEADER -->
+
+            <header class="chat-header">
+
+                <div class="brand">
+
+                    <div class="brand-icon">
+                        🌴
+                    </div>
+
+                    <div>
+                        <h1>Palm Messenger</h1>
+
+                        <div class="chat-status">
+                            <span class="status-dot"></span>
+                            <span id="online-count">
+                                Общий чат
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="profile-button"
+                    class="profile-button"
+                    aria-label="Профиль"
+                >
+
+                    <div
+                        id="header-avatar"
+                        class="avatar avatar-small"
+                    >
+                        👤
+                    </div>
+
+                </button>
+
+            </header>
+
+
+            <!-- CHAT -->
+
+            <main
+                id="messages"
+                class="messages"
+            >
+
+                <div
+                    id="welcome-message"
+                    class="welcome-message"
+                >
+
+                    <div class="welcome-icon">
+                        🌴
+                    </div>
+
+                    <h2>Добро пожаловать в Palm Messenger!</h2>
+
+                    <p>
+                        Здесь начинается ваш общий чат.
+                    </p>
+
+                </div>
+
+            </main>
+
+
+            <!-- TYPING -->
+
+            <div
+                id="typing-indicator"
+                class="typing-indicator hidden"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+
+                <span id="typing-text">
+                    Кто-то печатает...
+                </span>
+            </div>
+
+
+            <!-- INPUT -->
+
+            <footer class="message-area">
+
+                <div class="input-wrapper">
+
+                    <textarea
+                        id="message-input"
+                        rows="1"
+                        maxlength="5000"
+                        placeholder="Написать сообщение..."
+                    ></textarea>
+
+                    <button
+                        id="emoji-button"
+                        class="icon-button"
+                        title="Эмодзи"
+                    >
+                        😊
+                    </button>
+
+                    <button
+                        id="send-button"
+                        class="send-button"
+                        title="Отправить"
+                    >
+                        ➤
+                    </button>
+
+                </div>
+
+                <div class="input-hint">
+                    Enter — отправить · Shift + Enter — новая строка
+                </div>
+
+            </footer>
+
+        </div>
+
+    </section>
+
+
+    <!-- ============================= -->
+    <!-- PROFILE MODAL -->
+    <!-- ============================= -->
+
+    <div
+        id="profile-modal"
+        class="modal hidden"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="profile-card">
+
+            <button
+                id="close-profile"
+                class="modal-close"
+            >
+                ×
+            </button>
+
+            <div
+                id="profile-avatar"
+                class="avatar avatar-large"
+            >
+                👤
+            </div>
+
+            <h2 id="profile-display-name">
+                Пользователь
+            </h2>
+
+            <div
+                id="profile-username"
+                class="profile-username"
+            >
+                @username
+            </div>
+
+            <p
+                id="profile-bio"
+                class="profile-bio"
+            >
+                Пока нет информации о пользователе.
+            </p>
+
+            <div class="profile-actions">
+
+                <button
+                    id="edit-profile-button"
+                    class="secondary-button"
+                >
+                    ✏️ Редактировать профиль
+                </button>
+
+                <button
+                    id="logout-button"
+                    class="danger-button"
+                >
+                    Выйти
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- MESSAGE CONTEXT MENU -->
+    <!-- ============================= -->
+
+    <div
+        id="message-menu"
+        class="message-menu hidden"
+    >
+
+        <button data-action="copy">
+            📋 <span>Копировать</span>
+        </button>
+
+        <button data-action="reply">
+            ↩️ <span>Ответить</span>
+        </button>
+
+        <button
+            id="edit-message-action"
+            data-action="edit"
+        >
+            ✏️ <span>Редактировать</span>
+        </button>
+
+        <button
+            id="delete-message-action"
+            data-action="delete"
+            class="menu-danger"
+        >
+            🗑️ <span>Удалить</span>
+        </button>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- EDIT MESSAGE MODAL -->
+    <!-- ============================= -->
+
+    <div
+        id="edit-modal"
+        class="modal hidden"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="edit-card">
+
+            <h2>Редактировать сообщение</h2>
+
+            <textarea
+                id="edit-input"
+                maxlength="5000"
+            ></textarea>
+
+            <div class="edit-actions">
+
+                <button
+                    id="cancel-edit"
+                    class="secondary-button"
+                >
+                    Отмена
+                </button>
+
+                <button
+                    id="save-edit"
+                    class="primary-button"
+                >
+                    Сохранить
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- DELETE CONFIRMATION -->
+    <!-- ============================= -->
+
+    <div
+        id="delete-modal"
+        class="modal hidden"
+    >
+
+        <div class="modal-backdrop"></div>
+
+        <div class="confirm-card">
+
+            <div class="confirm-icon">
+                🗑️
+            </div>
+
+            <h2>Удалить сообщение?</h2>
+
+            <p>
+                Это действие нельзя будет отменить.
+            </p>
+
+            <div class="edit-actions">
+
+                <button
+                    id="cancel-delete"
+                    class="secondary-button"
+                >
+                    Отмена
+                </button>
+
+                <button
+                    id="confirm-delete"
+                    class="danger-button"
+                >
+                    Удалить
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ============================= -->
+    <!-- TOAST -->
+    <!-- ============================= -->
+
+    <div
+        id="toast"
+        class="toast hidden"
+    ></div>
+
+</div>
+
+
+<script src="/static/app.js"></script>
+
+</body>
+</html>
